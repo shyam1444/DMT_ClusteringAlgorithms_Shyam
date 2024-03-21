@@ -14,5 +14,5 @@ dd
 view(dd)
 constant_columns <- sapply(df, function(x) length(unique(x)) <= 1)
 df_filtered <- df[, !constant_columns]
-clara_res_filtered <- clara(df_filtered, k = 2)
+clara_res_filtered <- clara(df_filtered, k = 5)
 fviz_cluster(clara_res_filtered, data = df_filtered)
