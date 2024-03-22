@@ -1,22 +1,15 @@
-% Load the dataset
-data = readtable('data.csv');
+# Load the dataset
+df <- read.csv("C:/Users/ShyamVenkatraman/Pictures/data.csv")
 
-% Extract relevant columns
-X = data{:, {'pincode', 'Latitude', 'Longtude'}};
+# Extract relevant columns
+X <- df[, c('Latitude', 'Longtude')]  # Corrected column name 'Longitude'
 
-% Convert pincode to categorical data
-pincode_categories = unique(data.pincode);
-X(:, 1) = categorical(X(:, 1));
+# Perform K-medoids clustering
+library("cluster")
+numClusters <- 2
+distances <- dist(X, method = "manhattan")
+kmedoids_model <- pam(distances, k = numClusters)
 
-% Perform K-medoids clustering
-numClusters = 3;
-[idx, medoids] = kmedoids(X(:, 1:2), numClusters, 'Distance', 'cityblock');
-
-% Visualize the clusters
-scatter(X(:, 1), X(:, 2), 10, pincode_categories(idx), 'filled');
-hold on;
-plot(medoids(:, 1), medoids(:, 2), 'kx', 'MarkerSize', 15, 'LineWidth', 2);
-xlabel('Latitude');
-ylabel('Longitude');
-title(['K-medoids Clustering with ', num2str(numClusters), 'Clusters']);
-legend('Pincode', 'Medoids');
+# Visualize the clusters
+plot(X$Latitude, X$Longtude, col = kmedoids_model$clustering, pch = 19, main = paste('K-medoids Clustering with', numClusters, 'Clusters'))
+points(X[kmedoids_model$id.med, 'Latitude'], X[kmedoids_model$id.med, 'Longtude'], col = 1:numClusters, pch = 'x', cex = 2)
