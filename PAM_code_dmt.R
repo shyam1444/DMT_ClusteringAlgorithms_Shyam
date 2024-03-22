@@ -1,10 +1,13 @@
+#Libraries
 library(cluster)
 library(tidyverse)
 library(factoextra)
 library(FactoMineR)
 
+#Reading the CSV file
 df <- read.csv("C:/Users/ShyamVenkatraman/Pictures/data.csv")
 
+#Displaying the representation
 if (nrow(df_numeric) > 0 && ncol(df_numeric) > 0) {
   fviz_nbclust(df_numeric, FUNcluster = pam, method = "silhouette") + theme_classic()
 } else {
