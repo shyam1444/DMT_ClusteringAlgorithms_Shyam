@@ -36,3 +36,6 @@ ggplot(data_with_clusters, aes(x = Longtude, y = Latitude, color = cluster)) +
   geom_point() +
   labs(title = "Clusters of Data Points", x = "Longitude", y = "Latitude") +
   theme_minimal()
+
+# Plot dendrogram
+fviz_dend(as.dendrogram(diana_result), k = 2)
