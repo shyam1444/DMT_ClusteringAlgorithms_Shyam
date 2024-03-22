@@ -31,3 +31,9 @@ df$Cluster <- clusters
 # View the resulting dataframe with cluster labels
 head(df)
 tail(df)
+
+#Plotting the Clusters
+ggplot(df, aes(x = Longtude, y = Latitude, color = factor(Cluster))) +
+  geom_point() +
+  labs(title = "Clusters of Data Points", x = "Longtude", y = "Latitude") +
+  theme_minimal()
