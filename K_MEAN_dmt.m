@@ -1,22 +1,17 @@
-% Load the dataset
-data = readtable('data.csv');
+# Load the dataset
+df = read.csv("C:/Users/ShyamVenkatraman/Pictures/data.csv")
 
-% Extract relevant columns
-X = data{:, {'pincode', 'Latitude', 'Longtude'}};
+# Extract relevant columns
+X <- data[, c('pincode', 'Latitude', 'Longtude')]
 
-% Convert pincode to categorical data
-pincode_categories = unique(data.pincode);
-X(:, 1) = categorical(X(:, 1));
+# Convert pincode to categorical data
+X$pincode <- as.factor(X$pincode)
 
-% Perform K-means clustering
-numClusters = 3;
-[idx, centers] = kmeans(X(:, 1:2), numClusters);
+# Perform K-means clustering
+numClusters <- 3
+kmeans_model <- kmeans(X[, c('Latitude', 'Longtude')], centers = numClusters)
 
-% Visualize the clusters
-scatter(X(:, 1), X(:, 2), 10, pincode_categories(idx), 'filled');
-hold on;
-plot(centers(:, 1), centers(:, 2), 'kx', 'MarkerSize', 15, 'LineWidth', 2);
-xlabel('Latitude');
-ylabel('Longitude');
-title(['K-means Clustering with ', num2str(numClusters), 'Clusters']);
-legend('Pincode', 'Cluster Centroids');
+# Visualize the clusters
+plot(X$Latitude, X$Longitude, col = kmeans_model$cluster, pch = 19, main = paste('K-means Clustering with', numClusters, 'Clusters'))
+points(kmeans_model$centers[,1], kmeans_model$centers[,2], col = 1:numClusters, pch = 'x', cex = 2)
+legend("topright", legend=paste("Cluster", 1:numClusters), col=1:numClusters, pch='x')
