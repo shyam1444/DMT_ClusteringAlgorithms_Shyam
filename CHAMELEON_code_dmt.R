@@ -1,4 +1,4 @@
-# Generate sample data (replace this with your actual data)
+# Read the CSV data
 set.seed(123)
 data <- read.csv("C:/Users/ShyamVenkatraman/Pictures/data.csv")
 
